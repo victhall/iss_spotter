@@ -7,8 +7,8 @@ const fetchMyIP = function (callback) {
     }
     if (response.statusCode !== 200) {
       const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
-      callback(Error(msg), null);
-      return;
+      return callback(Error(msg), null);
+
     }
 
     const ip = JSON.parse(body).ip;
@@ -16,4 +16,16 @@ const fetchMyIP = function (callback) {
   });
 };
 
-module.exports = { fetchMyIP };
+const fetchCoordsByIP = function (ip, callback) {
+  request(ip, (error, response, body) => {
+    if (error) {
+      return callback(error, null)
+    }
+    if (response.statusCode !== 200) {
+      const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
+      return callback(Error(msg), null);
+    }
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
